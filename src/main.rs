@@ -90,7 +90,7 @@ fn clean_tokens<'a>(tokens: Vec<&'a str>) -> Vec<&'a str> {
     clean_tokens
 }
 
-fn translate(line: &str) -> Result<[u8; 4], String> {
+fn assemble_line(line: &str) -> Result<[u8; 4], String> {
     let tokens: Vec<&str> = line.split_whitespace().collect();
     let tokens = clean_tokens(tokens);
 
@@ -119,7 +119,7 @@ fn translate(line: &str) -> Result<[u8; 4], String> {
     Ok([instruction_byte, arg_bytes[0], arg_bytes[1], arg_bytes[2]])
 }
 
-fn assemble(src_path: &Path, out_path: &Path) -> io::Result<()> {
+fn assemble_file(src_path: &Path, out_path: &Path) -> io::Result<()> {
     use std::fs;
     use std::io::Write;
 
@@ -131,7 +131,7 @@ fn assemble(src_path: &Path, out_path: &Path) -> io::Result<()> {
     let mut out_file: fs::File = fs::File::create(out_path).unwrap();
 
     for line in src_file_lines {
-        let translation_result = translate(&line);
+        let translation_result = assemble_line(&line);
         match translation_result {
             Ok(mut instruction_bytes) => {
                 out_file.write_all(&instruction_bytes);
@@ -152,7 +152,7 @@ fn main() {
     let out_path_buf = src_path.with_extension("sno");
     let out_path = out_path_buf.as_path();
 
-    let result = assemble(src_path, out_path);
+    let result = assemble_file(src_path, out_path);
     match result {
         Err(err) => println!("{:?}", err),
         _ => {}
