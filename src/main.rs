@@ -40,7 +40,7 @@ fn decode_literal(literal_str: &str) -> u16 {
 }
 
 fn u16_bytes(val: u16) -> [u8; 2] {
-    [((0xF0 & val) >> 8) as u8, ((0x0F & val) >> 0) as u8]
+    [((0xFF00 & val) >> 8) as u8, ((0x00FF & val) >> 0) as u8]
 }
 
 fn bytes_for_reg_literal(args: &[&str]) -> [u8; 3] {
@@ -135,8 +135,7 @@ fn assemble(src_path: &Path, out_path: &Path) -> io::Result<()> {
         match translation_result {
             Ok(mut instruction_bytes) => {
                 out_file.write_all(&instruction_bytes);
-                out_file.write_all("\n".as_bytes());
-            },
+            }
             Err(err) => println!("{:?}", err),
         }
     }

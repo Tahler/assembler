@@ -6,11 +6,11 @@ pub enum InstructionType {
     Store = 0x13,
 
     // Arithmetic: 0x2N
-    Add = 0x20,
-    Subtract = 0x21,
-    Multiply = 0x22,
-    Divide = 0x23,
-    Equal = 0x24,
+    Add = 0x21,
+    Subtract = 0x22,
+    Multiply = 0x23,
+    Divide = 0x24,
+    Equal = 0x25,
 
     // Goto: 0x3N
     Goto = 0x31,
