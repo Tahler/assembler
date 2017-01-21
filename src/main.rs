@@ -5,18 +5,17 @@ mod instruction;
 
 use instruction::InstructionType;
 
-fn open(file_path: &str) -> fs::File {
+fn open(file_path: &Path) -> fs::File {
     match fs::File::open(&file_path) {
         Ok(file) => file,
-        Err(err) => panic!("Failed to open {}: {}", file_path, err),
+        Err(err) => panic!("Failed to open {:?}: {:?}", file_path, err),
     }
 }
 
 fn open_lines(file_path: &Path) -> io::Result<Vec<String>> {
-    use std::fs::File;
     use std::io::{BufRead, BufReader};
 
-    let file = try!(File::open(file_path));
+    let file = open(file_path);
     let buf_reader = BufReader::new(&file);
     buf_reader.lines().collect()
 }
@@ -133,7 +132,7 @@ fn assemble_file(src_path: &Path, out_path: &Path) -> io::Result<()> {
     for line in src_file_lines {
         let translation_result = assemble_line(&line);
         match translation_result {
-            Ok(mut instruction_bytes) => {
+            Ok(instruction_bytes) => {
                 out_file.write_all(&instruction_bytes);
             }
             Err(err) => println!("{:?}", err),
