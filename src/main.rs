@@ -35,7 +35,10 @@ fn decode_literal(literal_str: &str) -> u16 {
     } else {
         literal_str.parse()
     };
-    parse_result.unwrap()
+    match parse_result {
+        Ok(int) => int,
+        Err(err) => panic!("Failed to parse {:?}: {:?}", literal_str, err),
+    }
 }
 
 fn u16_bytes(val: u16) -> [u8; 2] {
@@ -130,12 +133,15 @@ fn assemble_file(src_path: &Path, out_path: &Path) -> io::Result<()> {
     let mut out_file: fs::File = fs::File::create(out_path).unwrap();
 
     for line in src_file_lines {
-        let translation_result = assemble_line(&line);
-        match translation_result {
-            Ok(instruction_bytes) => {
-                out_file.write_all(&instruction_bytes);
+        let is_src_line = !line.is_empty() && !line.starts_with("#");
+        if is_src_line {
+            let translation_result = assemble_line(&line);
+            match translation_result {
+                Ok(instruction_bytes) => {
+                    out_file.write_all(&instruction_bytes);
+                }
+                Err(err) => panic!("{:?}", err),
             }
-            Err(err) => println!("{:?}", err),
         }
     }
 
