@@ -24,8 +24,10 @@ fn decode_reg(reg_str: &str) -> u8 {
     assert!(reg_str.len() == 2);
     assert!(reg_str.starts_with("R"));
 
-    let num = reg_str.chars().nth(1).unwrap();
-    num.to_string().parse().unwrap()
+    let one_based_num_str = reg_str.chars().nth(1).unwrap().to_string();
+    let one_based_num = one_based_num_str.parse::<u8>().unwrap();
+    let zero_based_num = one_based_num - 1;
+    zero_based_num
 }
 
 fn decode_literal(literal_str: &str) -> u16 {
