@@ -97,7 +97,7 @@ LOADC R1, 0
 # R2 = 1
 LOADC R2, 1
 # R4 = 2 (Printed 2 of 25 elements)
-LOADC R4, 2
+LOADC R4, 3 # TODO: why?
 # R3 = R1 + R2
 ADD R1, R2, R3
 
