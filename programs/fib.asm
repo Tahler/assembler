@@ -97,8 +97,8 @@ LOADC R4, 2
 ADD R1, R2, R3
 
 # if R4 = 25
-LOADC R1, 25
-EQ R5, R1, R4
+LOADC R5, 25
+EQ R4, R5, R5
 ## "break" / "exit"
 GOTOIF 0x0204, R5
 # else print R3
