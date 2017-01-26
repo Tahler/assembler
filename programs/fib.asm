@@ -99,8 +99,8 @@ ADD R1, R2, R3
 # if R4 = 25
 LOADC R1, 25
 EQ R5, R1, R4
-## "break"
-GOTOIF 0x0048, R5 # TODO: find addr
+## "break" / "exit"
+GOTOIF 0x0204, R5
 # else print R3
 ## Save reg state
 STORE 0x0010, R1
@@ -172,6 +172,6 @@ ADD R3, R5, R2
 LOADC R5, 1
 ADD R5, R4, R4
 # loop
-GOTO 0x0014 # TODO:
+GOTO 0x0082
 # done
 EXIT
