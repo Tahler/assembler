@@ -117,7 +117,7 @@ LOAD R4, 0x0026
 LOAD R5, 0x0028
 LOAD R6, 0x002a
 ## R1 = old R3
-LOAD 0x0014, R1
+LOAD R1, 0x0014
 ## Load divisor and offset
 LOADC R5, 10
 LOADC R6, 48
