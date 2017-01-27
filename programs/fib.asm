@@ -198,7 +198,6 @@ CPRINT 0x0007
 CPRINT 0x0005
 CPRINT 0x0003
 CPRINT 0x0001
-CPRINT 0x0031
 ## Restore reg state
 LOAD R1, 0x0010
 LOAD R2, 0x0012
@@ -215,6 +214,8 @@ EQ R4, R5, R5
 # "break" / "exit"
 GOTOIF 0x02d8, R5
 # else reset and loop
+## print newline
+CPRINT 0x0031
 ## R1 = R2
 ADD R2, R5, R1
 ## R2 = R3
